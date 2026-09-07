@@ -1,0 +1,1222 @@
+/* ==========================================================================
+   Login Popup - 로그인 팝업 (회원가입 없는 아웃로그인)
+   ========================================================================== */
+#login_pop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  /* 모바일 메뉴 버튼(1002)보다 위 */
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+#login_pop.on {
+  display: flex;
+}
+
+#login_pop .lp_bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+#login_pop .lp_box {
+  position: relative;
+  width: min(36rem, calc(100% - 3.2rem));
+  padding: 3.2rem;
+  background: var(--white-color);
+  border-radius: 0.8rem;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.2);
+}
+
+#login_pop h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+#login_pop .lp_close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+#login_pop .lp_close .icon {
+  width: 2rem;
+  height: 2rem;
+  stroke: var(--text-color-sub);
+  stroke-width: 2;
+  transition: stroke 0.3s;
+}
+
+#login_pop .lp_close:hover .icon {
+  stroke: var(--text-color);
+}
+
+#login_pop input[type="text"],
+#login_pop input[type="password"] {
+  width: 100%;
+  height: 4.4rem;
+  margin-bottom: 0.8rem;
+  padding: 0 1.4rem;
+  border: 1px solid var(--line-color);
+  border-radius: 0.6rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+#login_pop input[type="text"]:focus,
+#login_pop input[type="password"]:focus {
+  outline: none;
+  border-color: var(--point-color);
+}
+
+#login_pop .lp_submit {
+  width: 100%;
+  height: 4.6rem;
+  margin-top: 0.4rem;
+  background: var(--primary-color);
+  border-radius: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--white-color);
+  transition: background 0.3s;
+}
+
+#login_pop .lp_submit:hover {
+  background: var(--point-color);
+}
+
+#login_pop .lp_etc {
+  display: flex;
+  align-items: center;
+  margin-top: 1.4rem;
+  font-size: 1.3rem;
+  color: var(--text-color-sub);
+}
+
+#login_pop .lp_etc .chk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   Header - 헤더
+   ========================================================================== */
+#header {
+  position: relative;
+  z-index: 999;
+  background: var(--white-color);
+  border-bottom: 1px solid var(--line-color);
+}
+
+/* ──────────────────────────────────────────────────────────
+   헤더 1층 : [로고] ──────────── [아웃로그인]
+   ────────────────────────────────────────────────────────── */
+#header .hd_top_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.4rem;
+
+  /* w_inner 가 좌우 여백을 가지므로 위아래만 지정한다 */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+#header .hd_top_wrap > h1 {
+  flex: 0 0 auto;
+}
+
+/* 아웃로그인 : 로고 오른쪽의 계정 · 관리자 영역 */
+#header .hd_out {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+
+  font-size: 1.4rem;
+  color: var(--text-color-sub);
+}
+
+#header .hd_out .who b {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+#header .hd_out .ob_lnk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0;
+  background: none;
+  border: 0;
+
+  font-size: 1.4rem;
+  color: var(--text-color-sub);
+  cursor: pointer;
+}
+
+#header .hd_out .ob_lnk .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* 관리자 전용 게시판 바로가기 : 사이에 가는 구분선 */
+#header .hd_out .adm_lnks {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding-right: 1.6rem;
+  border-right: 1px solid var(--line-color);
+}
+
+#header .hd_out .adm_lnks .ob_lnk.strong {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* ── 로고 ─────────────────────────────────────────────────── */
+#header h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  white-space: nowrap;
+  user-select: none;
+}
+
+#header h1 a {
+  display: block;
+  width: 210px;
+  height: 44px;
+
+  background-image: url(../images/logo.svg);
+  background-repeat: no-repeat;
+  /* 왼쪽 정렬 : 로고 이미지의 가로세로 비율이 이 상자와 달라도
+     그림의 왼쪽 끝이 아래 메뉴 첫 항목과 같은 선에 놓인다.
+     (center 로 두면 남는 여백만큼 로고가 안쪽으로 밀려 선이 어긋난다) */
+  background-position: left center;
+  background-size: contain;
+}
+
+/* ──────────────────────────────────────────────────────────
+   헤더 2층 : [메뉴(왼쪽)] ──────────── [대표 전화]
+   ────────────────────────────────────────────────────────── */
+#header .header_bottom {
+  background: var(--white-color);
+  border-top: 1px solid var(--line-color);
+}
+
+/* 스크롤하면 메뉴 줄만 화면 맨 위에 고정된다 */
+#header.scr .header_bottom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  border-top: 0;
+  border-bottom: 1px solid var(--line-color);
+}
+
+/* 메뉴 줄이 빠져나간 만큼 자리를 채워 화면이 튀지 않게 한다 */
+#header.scr {
+  padding-bottom: 6.1rem;
+}
+
+#header .hd_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.4rem;
+}
+
+/* 메뉴는 왼쪽에 붙인다 */
+#header .gnb_container {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+#header .gnb {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 대표 전화 : 메뉴 줄 오른쪽 (테두리 없이 번호만) */
+#header .htel {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  height: 4.2rem;
+
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--primary-color);
+}
+
+#header .htel .icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+#header .gnb > ul {
+  display: flex;
+  justify-content: center;
+}
+
+#header .gnb > ul > li {
+  position: relative;
+  padding: 0 2.4rem;
+}
+
+/* 메뉴를 왼쪽에 붙였으므로 첫 항목의 왼쪽 여백을 없애 로고와 선을 맞춘다 */
+#header .gnb > ul > li:first-child {
+  padding-left: 0;
+}
+
+/* 항목 사이 세로 구분선 (양쪽 끝에는 두지 않는다) */
+#header .gnb > ul > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+
+  width: 1px;
+  height: 1.4rem;
+  background: var(--line-color);
+}
+
+#header .gnb > ul > li > a {
+  position: relative;
+  display: block;
+  line-height: 6rem;
+
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+/* 현재 보고 있는 섹션 표시 (밑줄) */
+#header .gnb > ul > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 2px;
+  background: var(--point-color);
+
+  transform: scaleX(0);
+  transition: 0.3s;
+}
+
+/* 마우스를 올리거나(호버) 현재 섹션일 때 가로 바가 나타난다
+   (글자 색은 바꾸지 않고 바로만 알린다) */
+#header .gnb > ul > li > a:hover::after,
+#header .gnb > ul > li > a.active::after {
+  transform: scaleX(1);
+}
+
+/* 대표전화 · 주소는 헤더 1층에 있으므로 PC 에서는 감춘다 (모바일 메뉴용) */
+#header .adm {
+  display: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   오버레이 헤더 : 메인(_INDEX_)에서 히어로 사진 위에 투명하게 겹친다
+   (PC 전용. 모바일은 아래 미디어쿼리의 흰 고정 헤더를 그대로 쓴다)
+   ────────────────────────────────────────────────────────── */
+@media (min-width: 1025px) {
+  #header.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+
+    background: transparent;
+    border-bottom: 0;
+  }
+
+  #header.overlay .header_top {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  /* 스크롤 전에는 메뉴 줄도 투명 + 흰 글자 */
+  #header.overlay:not(.scr) .header_bottom {
+    background: transparent;
+    border-top: 0;
+  }
+
+  #header.overlay:not(.scr) .gnb > ul > li > a {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  #header.overlay:not(.scr) .gnb > ul > li:not(:last-child)::after {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  /* 사진 위에서는 가로 바를 흰색으로 (포인트 색은 어두워 잘 안 보인다)
+     현재 섹션도 글자 색을 바꾸지 않고 이 바로만 알린다 */
+  #header.overlay:not(.scr) .gnb > ul > li > a::after {
+    background: var(--white-color);
+  }
+
+  #header.overlay:not(.scr) .htel {
+    color: var(--white-color);
+  }
+
+  #header.overlay:not(.scr) .htel .icon {
+    stroke: var(--white-color);
+  }
+
+  /* 로고 · 공지도 사진 위에서는 흰색 계열로 */
+  #header.overlay h1 a {
+    filter: brightness(0) invert(1);
+  }
+
+  #header.overlay.scr h1 a {
+    filter: none;
+  }
+
+  #header.overlay .hd_out,
+  #header.overlay .hd_out .ob_lnk {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  #header.overlay .hd_out .who b {
+    color: var(--white-color);
+  }
+
+  /* 헤더가 흐름에서 빠져 있으므로 스크롤 고정 시 자리 채움도 필요 없다 */
+  #header.overlay.scr {
+    padding-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   Mobile Menu Button - 모바일 메뉴 버튼
+   ========================================================================== */
+.mbtn {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  /* *,
+  *::before,
+  *::after {
+    outline: 1px solid rgba(255, 0, 0, 0.5);
+  } */
+  .mbtn {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    /* 헤더 1층(로고 줄) 높이 7.2rem 의 세로 가운데 */
+    top: 2rem;
+    right: 1.6rem;
+    /* 메뉴 오버레이(.gnb_container, 1000)와 로고(1001)보다 위에 있어야
+       메뉴를 열었을 때 닫기(X) 버튼이 가려지지 않는다 */
+    z-index: 1002;
+
+    width: 32px;
+    height: 32px;
+
+    background: var(--lightgray-color);
+    border: 1px solid var(--line-color);
+    border-radius: var(--ui-radius);
+    /* background: rgba(255, 255, 255, 0.25); */
+    font-size: 0;
+  }
+
+  .mbtn::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 4px;
+    right: 4px;
+
+    height: 2px;
+    background: var(--text-color);
+  }
+
+  .mbtn.on::before {
+    display: none;
+  }
+
+  .mbtn::after {
+    content: "";
+    position: absolute;
+    bottom: 7px;
+    left: 4px;
+    right: 4px;
+
+    height: 2px;
+    background: var(--text-color);
+  }
+
+  .mbtn.on::after {
+    display: none;
+  }
+
+  .mbtn span::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 4px;
+    right: 4px;
+
+    height: 2px;
+    background: var(--text-color);
+  }
+
+  .mbtn.on span::before {
+    transform: rotate(45deg);
+  }
+
+  .mbtn span::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 4px;
+    right: 4px;
+
+    height: 2px;
+    background: var(--text-color);
+  }
+
+  .mbtn.on span::after {
+    transform: rotate(-45deg);
+  }
+
+  #header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: var(--white-color);
+  }
+
+  /* 모바일 헤더 1층 : [전화 아이콘] — [로고] — [햄버거] 로 좌우 균형을 맞춘다 */
+  #header .hd_top_wrap {
+    justify-content: center;
+    padding-top: 1.6rem;
+    padding-bottom: 1.6rem;
+  }
+
+  /* 아웃로그인은 좁은 화면에서는 감춘다 (로고를 가운데 두기 위해) */
+  #header .hd_out {
+    display: none;
+  }
+
+  /* 전화는 아이콘만 남겨 왼쪽 위로 올린다.
+     위치 · 크기 · 테두리를 오른쪽 햄버거(.mbtn)와 똑같이 줘서 한 줄에 맞춘다 */
+  #header .htel {
+    position: fixed;
+    top: 2rem;
+    left: 1.6rem;
+    /* 메뉴를 열어도 햄버거와 같이 보이도록 같은 층에 둔다 */
+    z-index: 1002;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+
+    width: 32px;
+    height: 32px;
+    padding: 0;
+
+    /* 눈에 바로 띄도록 빨간 바탕 + 흰 아이콘 */
+    background: #e60012;
+    border: 0;
+    border-radius: 4px;
+  }
+
+  /* 번호는 감추고 아이콘만 */
+  #header .htel .num {
+    display: none;
+  }
+
+  #header .htel .icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    stroke: var(--white-color);
+    stroke-width: 2;
+  }
+
+  #header h1 {
+    position: relative;
+    z-index: 1001;
+  }
+
+  /* 데스크탑의 왼쪽 정렬(order/margin)을 풀어 가운데로 되돌린다
+     (데스크탑 규칙과 같은 선택자여야 우선순위에서 밀리지 않는다) */
+  #header .hd_top_wrap > h1 {
+    order: 0;
+    margin-right: 0;
+  }
+
+  #header h1 a {
+    width: 170px;
+    height: 40px;
+    /* 모바일에서는 로고가 화면 가운데 오므로 그림도 가운데로 되돌린다 */
+    background-position: center center;
+  }
+
+  /* 메뉴 줄은 오버레이(.gnb_container)로 바뀌므로 자리를 차지하지 않는다 */
+  #header .header_bottom {
+    border-top: 0;
+  }
+
+  #header .hd_wrap {
+    height: 0;
+    padding: 0;
+  }
+
+  #header.scr {
+    padding-bottom: 0;
+  }
+
+  #header.scr .header_bottom {
+    position: static;
+    box-shadow: none;
+    border-bottom: 0;
+    backdrop-filter: none;
+  }
+
+  /* 세로로 쌓이므로 구분선과 좌우 여백을 없앤다 */
+  #header .gnb > ul > li {
+    padding: 0;
+  }
+
+  #header .gnb > ul > li::after,
+  #header .gnb > ul > li > a::after {
+    display: none;
+  }
+
+  /* 모바일에서는 메뉴가 화면 전체를 덮는 오버레이가 된다 (헤더에는 로고만 남음) */
+  #header .gnb_container {
+    position: fixed;
+    top: 0;
+    left: -200%;
+    z-index: 1000;
+
+    /* 한 줄 헤더용 데스크톱 값(flex:1 / margin-left:auto)을 여기서 되돌린다 */
+    flex: 0 0 auto;
+    margin-left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  #header .gnb_container.on {
+    left: 0;
+  }
+
+  /* 흰 메뉴판 : 화면 아래끝까지 꽉 채우고, 내용이 길면 이 안에서 스크롤한다.
+     주의: justify-content 는 반드시 flex-start 여야 한다. 데스크톱 값(flex-end)이
+     남아 있으면 메뉴 항목이 판 맨 아래로 밀려 화면 밖에 놓인다. */
+  #header .gnb {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    margin-left: 0;
+
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+
+    width: 100%;
+    height: 100%;
+    /* 위 여백은 헤더 1층(로고 줄, 7.2rem)에 가리지 않을 만큼 준다 */
+    padding: 9.6rem 2.4rem 4rem 2.4rem;
+    overflow-y: auto;
+
+    background: var(--white-color);
+  }
+
+  /* 항목이 적어도 흰 배경이 아래까지 이어지도록 목록은 내용 높이만 차지시킨다 */
+  #header .gnb > ul {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    border-top: 1px solid var(--primary-color);
+  }
+
+  #header .gnb > ul > li > a {
+    line-height: 5.6rem;
+    border-bottom: 1px solid var(--line-color);
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.8rem;
+    padding: 0 0 0 1.6rem;
+  }
+
+  #header.on .gnb > ul > li > a {
+    line-height: 5.6rem;
+    padding: 0 0 0 1.6rem;
+    color: var(--text-color);
+  }
+
+  #header .gnb > ul > li {
+    position: relative;
+  }
+
+  /* 계정 · 관리자 링크 : 모바일 메뉴 맨 위에 카드처럼 놓는다 (order:-1)
+     로그인한 사람에게만 출력되므로 비회원에게는 이 카드 자체가 없다.
+     전화는 왼쪽 위 아이콘, 주소는 푸터에서 안내한다 */
+  #header .adm {
+    order: -1;
+    position: relative;
+    display: block;
+
+    margin: 0 0 2.4rem 0;
+    padding: 2rem;
+
+    background: var(--lightgray-color);
+    border: 1px solid var(--line-color);
+    color: var(--text-color);
+  }
+
+  /* 모바일 메뉴 안의 계정 · 관리자 링크 (PC 는 헤더의 .hd_out 이 담당) */
+  #header .m_out {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.6rem;
+
+    font-size: 1.4rem;
+  }
+
+  #header .m_out .who b {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  #header .m_out a {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+}
+
+/* ==========================================================================
+   Sub Content - 서브 콘텐츠 영역
+   ========================================================================== */
+.sub_content {
+  min-height: 60rem;
+  margin-top: 8rem;
+  margin-bottom: 12rem;
+  background: var(--white-color);
+}
+
+.sub_content .page_title {
+  margin-bottom: 2.4rem;
+}
+
+.sub_content .page_title h3 {
+  position: relative;
+  padding: 1.6rem 0;
+  /* border-bottom: 1px solid var(--line-color); */
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  gap: 8rem;
+}
+
+.sub_content .page_title h3::after {
+  content: "";
+
+  flex: 1;
+  height: 1px;
+
+  background: var(--primary-color);
+  opacity: 0.25;
+}
+
+.sub_content .page_title h3 strong {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.sub_content .content p {
+  font-size: 1.7rem;
+  line-height: 2.4rem;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   Footer - 푸터
+   ========================================================================== */
+#footer {
+  padding: 5.6rem 0 5.6rem 0;
+  background: var(--footerbg-color);
+  color: var(--text-color);
+  border-top: 1px solid var(--line-color);
+  font-size: 1.5rem;
+}
+
+#footer .f_logo {
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 1024px) {
+  #footer .f_logo {
+    display: none;
+  }
+}
+
+#footer .lnk {
+  margin-bottom: 5.6rem;
+  padding: 5.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#footer .lnk > ul {
+  display: flex;
+  gap: 8rem;
+}
+
+#footer .lnk > ul > li > a {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1.6rem;
+}
+
+#footer .lnk > ul ul a {
+  display: block;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  #footer .lnk {
+    display: none;
+  }
+}
+
+#footer .inner {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  gap: 8px;
+}
+
+#footer .info {
+  display: flex;
+  gap: 2.4rem;
+}
+
+#footer .info li {
+  position: relative;
+  /* text-align: center; */
+  white-space: nowrap;
+}
+
+#footer .info li ~ li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -12px;
+
+  transform: translate(0, -50%);
+
+  width: 1px;
+  height: 0.5em;
+
+  background: #ccc;
+}
+
+@media (max-width: 768px) {
+  #footer .info {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #footer .info li ~ li::before {
+    display: none;
+  }
+}
+
+/* Family Link - 패밀리 사이트 */
+#footer .ft_info {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#footer .ft_info #family_link {
+  position: relative;
+  z-index: 5;
+}
+
+#footer .ft_info #family_link .f_link {
+  position: relative;
+  display: block;
+  width: 16rem;
+  height: 4rem;
+  padding: 0 2.4rem;
+  font-size: 1.5rem;
+  text-align: left;
+  color: var(--line-color);
+  text-transform: uppercase;
+  background: var(--primary-color);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+#footer .ft_info #family_link .f_link .icon {
+  position: absolute;
+  right: 0.8rem;
+  top: 1rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  stroke: var(--white-color);
+  stroke-width: 1;
+}
+
+#footer .ft_info #family_link .f_link.on .icon {
+  transform: rotate(180deg);
+}
+
+#footer .ft_info #family_link ul {
+  display: none;
+  position: absolute;
+  bottom: 4rem;
+  width: 100%;
+  margin-top: -1px;
+  z-index: 2;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--text-color);
+  overflow: hidden;
+}
+
+#footer .ft_info #family_link ul > li > a {
+  display: block;
+  padding: 0 2.4rem;
+  font-size: 1.5rem;
+  line-height: 3.9rem;
+  color: var(--line-color);
+}
+
+#footer .ft_info #family_link ul > li ~ li > a {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#footer .ft_info #family_link ul > li > a:hover {
+  background: var(--primary-color);
+}
+
+@media (max-width: 1024px) {
+  #footer .ft_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+}
+
+/* ==========================================================================
+   Kakao Map - 카카오 지도
+   ========================================================================== */
+.root_daum_roughmap {
+  width: 100% !important;
+}
+
+.root_daum_roughmap .cont {
+  display: none;
+}
+
+.root_daum_roughmap .wrap_controllers {
+  display: none;
+}
+
+.root_daum_roughmap .border2 {
+  display: block !important;
+}
+@media (max-width: 768px) {
+  .root_daum_roughmap .wrap_map {
+    height: 240px !important;
+  }
+}
+
+/* ==========================================================================
+   Side Link - 사이드 플로팅 링크
+   ========================================================================== */
+#side_lnk {
+  position: fixed;
+  bottom: 4rem;
+  right: 1.6rem;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.8s;
+}
+
+#side_lnk.on {
+  right: 1.6rem;
+  bottom: 12rem;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 원형 버튼 세로 스택 (ㅇ ㅇ ㅇ) */
+#side_lnk .lnk_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.2rem;
+}
+
+#side_lnk .lnk_wrap > a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 3.2rem;
+  overflow: hidden;
+  background: var(--white-color);
+  border: 1px solid var(--line-color);
+  transition: all 0.3s;
+}
+
+/* 마우스 호버 시 왼쪽으로 길어짐 */
+#side_lnk .lnk_wrap > a:not(.d_tel):hover {
+  width: 20rem;
+  border-color: var(--primary-color);
+}
+
+/* 아이콘: 오른쪽 원 영역(6.4rem)에 고정 */
+#side_lnk .lnk_wrap > a .icon {
+  position: absolute;
+  top: 50%;
+  right: 1.9rem;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  stroke: var(--text-color);
+  stroke-width: 1;
+}
+
+/* 텍스트: 평소 폭 0, 호버 시 드러남 */
+#side_lnk .lnk_wrap > a span {
+  width: 0;
+  margin-left: 2.4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: all 0.3s;
+}
+
+#side_lnk .lnk_wrap > a:not(.d_tel):hover span {
+  width: 11.6rem;
+}
+
+/* 카카오톡 상담 */
+#side_lnk .lnk_wrap > a.d_kakao {
+  background: #fee500;
+  border-color: #fee500;
+}
+
+#side_lnk .lnk_wrap > a.d_kakao img {
+  position: absolute;
+  top: 50%;
+  right: 1.6rem;
+  transform: translateY(-50%);
+  width: 3.2rem;
+}
+
+#side_lnk .lnk_wrap > a.d_kakao span {
+  color: #3c1e1e;
+}
+
+#side_lnk .d_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.4rem;
+  height: 6.4rem;
+  background: var(--primary-color);
+  border-radius: 50%;
+}
+
+#side_lnk .d_btn .icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  stroke: var(--white-color);
+  stroke-width: 2;
+}
+
+#side_lnk .lnk_wrap > a.d_tel {
+  position: relative;
+  background: var(--point-color);
+  border-color: var(--point-color);
+
+  display: none;
+}
+
+#side_lnk .lnk_wrap > a.d_tel .icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  stroke: var(--white-color);
+  stroke-width: 2;
+}
+
+@media (max-width: 768px) {
+  #side_lnk .d_btn {
+    position: static;
+    transform: translate(0, 0);
+  }
+  #side_lnk .lnk_wrap {
+    background: transparent;
+    border-radius: 0.8em;
+    border: 1px solid transparent;
+    /* box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1); */
+    padding: 0 0;
+    margin-bottom: 0;
+  }
+  #side_lnk .lnk_wrap > a:not(.d_tel):not(.d_kakao) {
+    display: none;
+  }
+
+  #side_lnk .lnk_wrap > a.d_tel {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  #side_lnk.on {
+    bottom: 4rem;
+  }
+}
+
+.s_lnk img {
+  padding: 0.8rem;
+  width: 2.8rem;
+  height: auto;
+  background: var(--primary-color);
+  box-sizing: content-box;
+  border-radius: 0.8rem;
+}
+
+.s_lnk {
+  margin-bottom: 3.2rem;
+}
+
+/* ==========================================================================
+   To Top Button - 상단 이동 버튼
+   ========================================================================== */
+.to_top {
+  position: fixed;
+  left: 50%;
+  bottom: 18rem;
+  z-index: 998;
+
+  transform: translate(-50%, 0);
+
+  max-width: calc(1610px + 160px);
+  width: 100%;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.5s;
+}
+
+.to_top button {
+  position: absolute;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+
+  background: var(--point-color);
+
+  border-radius: 50%;
+}
+
+.to_top button svg {
+  margin-top: 2px;
+}
+
+.to_top.on {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .to_top {
+    position: fixed;
+    left: auto;
+    right: -1.6rem;
+    bottom: 14rem;
+
+    width: auto;
+  }
+
+  .to_top.on {
+    right: 1.6rem;
+  }
+}
+
+
+/* ==========================================================================
+   섞으면서 : 이 업종의 강조색 (다름스테이)
+   셸은 테마 15 에서 왔지만 색은 여기서 정한 것이 이긴다.
+   ========================================================================== */
+:root {
+  --point-color: #bd553d;
+  --point-rgb: 202 112 91;
+}

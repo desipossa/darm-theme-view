@@ -1,0 +1,78 @@
+@charset "utf-8";
+
+/* ============================================================
+   제목용 굵은 고딕 : G마켓 산스 (GmarketSans)
+   - 히어로 슬로건 · 섹션 제목처럼 '보는 글'에 쓰는 두꺼운 고딕입니다.
+   - 눈누(noonfonts) CDN 의 woff 를 직접 불러옵니다.
+   - Medium(500) · Bold(700) 두 굵기만 씁니다.
+   ============================================================ */
+@font-face {
+  font-family: "GmarketSans";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+}
+
+@font-face {
+  font-family: "GmarketSans";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+    format("woff");
+}
+
+/* ============================================================
+   웹폰트 : Pretendard Variable (weight 45~920)
+
+   - 폰트 파일 자체는 head.sub.php 의 <link> 에서 불러온다.
+     (여기서 @import 를 쓰면 fonts.css 를 다 받은 뒤에야 폰트 CSS 요청이
+      시작돼서 로딩이 한 단계 늦어진다)
+   - 이 파일은 "어떤 요소에 적용할지"만 관리한다.
+   ============================================================ */
+
+:root {
+  --font-base: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", "Segoe UI", Roboto, "Helvetica Neue", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  /* 제목용 굵은 고딕. 변수 이름은 테마 전반의 호환을 위해 그대로 둡니다.
+     (쓰는 곳 : .st 제목 / 히어로 패널 · 상담 바 라벨 / 전화번호 / 번호 장식) */
+  --font-serif: "GmarketSans", "Pretendard Variable", Pretendard,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+body {
+  font-family: var(--font-base);
+}
+
+/* 제목 유틸 : 두꺼운 고딕(Bold)로 덩어리감 있게
+   ※ 각 섹션이 명조 시절의 font-weight:400 을 더 높은 우선순위로
+     지정해 두었으므로, 여기서 !important 로 Bold 를 고정한다. */
+.st {
+  font-family: var(--font-serif);
+  font-weight: 700 !important;
+  font-style: normal;
+  letter-spacing: -0.02em;
+}
+
+/* 그누보드 기본 css(default.css / default_shop.css / mobile.css)가
+   제목과 폼 요소에 '맑은 고딕'을 따로 지정해 두었기 때문에,
+   본문 폰트를 그대로 물려받도록 되돌린다.
+   ※ 이 규칙이 없으면 h1~h6 와 입력폼에만 웹폰트가 적용되지 않는다. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+button,
+select,
+textarea,
+optgroup {
+  font-family: inherit;
+}
