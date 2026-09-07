@@ -22,32 +22,38 @@ body { margin: 0; }
 <body>
 
 
-<!doctype html>
-<html lang="ko">
 
-<head>
-    <meta charset="utf-8">
-    <!--추가 meta tag-->
-    <meta name="NaverBot" content="All" />
-    <meta name="NaverBot" content="index,follow" />
-    <meta name="Yeti" content="All" />
-    <meta name="Yeti" content="index,follow" />
-
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport"
-        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-    <meta name="robots" content="index, follow">
-    <meta name="title" content="다름한옥">
-    <meta name="description" content="한 채를 온전히 다시 살리는 한옥 리모델링 전문입니다. 실측과 도면 검토, 목재 선정과 시공까지 같은 사람이 끝까지 맡아 살기 좋은 한 채로 고쳐 드립니다.">
-    <meta name="keywords" content="">
 
     
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="다름한옥">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:title" content="다름한옥">
-    <meta property="og:description" content="한 채를 온전히 다시 살리는 한옥 리모델링 전문입니다. 실측과 도면 검토, 목재 선정과 시공까지 같은 사람이 끝까지 맡아 살기 좋은 한 채로 고쳐 드립니다.">
-    <meta property="og:url" content="assets/ease23/">
+    <script>
+    (function() {
+        // 우클릭(컨텍스트 메뉴) 차단
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 개발자도구 관련 단축키 차단 (텍스트 선택/복사는 허용)
+        document.addEventListener('keydown', function(e) {
+            var key = (e.key || '').toLowerCase();
+
+            // F12 (개발자도구)
+            if (e.keyCode === 123 || key === 'f12') {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (소스보기), Ctrl+S (저장), Ctrl+P (인쇄)
+            if (e.ctrlKey && !e.shiftKey && (key === 'u' || key === 's' || key === 'p')) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I / J / C (개발자도구, 콘솔, 요소검사)
+            if (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'j' || key === 'c')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    })();
+    </script>
     
 
 </head>
@@ -123,7 +129,7 @@ body { margin: 0; }
         <div class="w_inner hd_wrap">
             <h1>
                 <a href="assets/ease23">
-                    <span class="blind">다름한옥</span>
+                    <span class="blind"></span>
                 </a>
             </h1>
 
@@ -145,8 +151,50 @@ body { margin: 0; }
 <ul class="onepage_nav">
     
     <li>
-        <a href="assets/ease23/#" data-section="">
-            
+        <a href="assets/ease23/#main_about" data-section="main_about">
+            소개
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_process" data-section="main_process">
+            짓는 과정
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_special" data-section="main_special">
+            짓는 원칙
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_gallery" data-section="main_gallery">
+            지은 집
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_video" data-section="main_video">
+            영상
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_hours" data-section="main_hours">
+            상담 시간
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_inquiry" data-section="main_inquiry">
+            상담 신청
+        </a>
+    </li>
+    
+    <li>
+        <a href="assets/ease23/#main_map" data-section="main_map">
+            찾아오시는 길
         </a>
     </li>
     
@@ -3673,12 +3721,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- ② 입금 계좌 -->
         <div class="col" data-aos="fade-up" data-aos-delay="150">
-            
-            </ul>
-            <p class="ft_holder">
-                예금주 <b></b><br>
-                공사비는 계약서에 적힌 일정에 따라 입금해 주세요.
-            </p>
             
         </div>
 

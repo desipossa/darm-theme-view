@@ -203,14 +203,20 @@
   background-size: contain;
 }
 
-#header.scr .header_bottom {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--white-color);
-  z-index: 999;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+/* 스크롤 뒤 헤더 상단 고정은 PC 전용.
+   모바일 헤더는 이미 sticky 라 필요 없고, 이 규칙이 모바일에도 걸리면
+   backdrop-filter 가 fixed 기준을 헤더로 바꿔버려서
+   메뉴 오버레이(.gnb_container)가 스크롤 뒤에는 열리지 않는다 */
+@media (min-width: 1025px) {
+  #header.scr .header_bottom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--white-color);
+    z-index: 999;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* 로고 · 메뉴 · 대표전화를 한 줄에 놓는다 */
